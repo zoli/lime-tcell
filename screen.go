@@ -1,6 +1,8 @@
 package main
 
-import "github.com/gdamore/tcell"
+import (
+	"github.com/gdamore/tcell"
+)
 
 var (
 	defaultStyle = tcell.StyleDefault
@@ -21,19 +23,6 @@ func newScreen() (*screen, error) {
 	}
 
 	return &screen{Screen: s}, nil
-}
-
-func (s *screen) loop() {
-	for {
-		ev := s.PollEvent()
-		switch ev := ev.(type) {
-		case *tcell.EventKey:
-			switch ev.Key() {
-			case tcell.KeyCtrlQ:
-				return
-			}
-		}
-	}
 }
 
 func (s *screen) setContent(xp, yp *int, r rune, style tcell.Style) {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/limetext/backend/log"
+	_ "github.com/limetext/commands"
 	"github.com/limetext/util"
 )
 
@@ -19,7 +20,6 @@ func main() {
 	defer shutDown()
 
 	fe.init()
-	fe.editor.ActiveWindow().OpenFile("./main.go", 0)
 
 	fe.loop()
 }

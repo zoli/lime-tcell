@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gdamore/tcell"
 	"github.com/limetext/backend"
 	"github.com/limetext/text"
 )
@@ -38,7 +39,19 @@ func (f *frontend) shutDown() {
 }
 
 func (f *frontend) loop() {
-	f.screen.loop()
+	for {
+		ev := f.screen.PollEvent()
+		switch ev := ev.(type) {
+		case *tcell.EventKey:
+			switch ev.Key() {
+			case tcell.KeyCtrlQ:
+				return
+			default:
+				kp := keyPress(ev)
+				f.editor.HandleInput(kp)
+			}
+		}
+	}
 }
 
 func (f *frontend) render(v *backend.View) {
