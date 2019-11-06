@@ -42,28 +42,21 @@ func (f *frontend) loop() {
 }
 
 func (f *frontend) render(v *backend.View) {
-	w, h := f.screen.Size()
+	_, h := f.screen.Size()
 	x, y := 0, 0
+	style, reverseStyle := defaultStyle, defaultStyle.Reverse(true)
 
 	runes := v.Substr(text.Region{0, v.Size()})
-	for _, r := range runes {
-		if r == '\n' {
-			f.screen.SetContent(x, y, ' ', nil, defaultStyle)
-		} else if r == '\t' {
-			f.screen.SetContent(x, y, ' ', []rune{' ', ' ', ' ', ' ', ' ', ' ', ' '}, defaultStyle)
-		} else {
-			f.screen.SetContent(x, y, r, nil, defaultStyle)
+	sel := v.Sel()
+	for i, r := range runes {
+		style = defaultStyle
+		if sel.Contains(text.Region{i, i}) {
+			style = reverseStyle
 		}
 
-		x++
-		if r == '\t' {
-			x += 7
-		}
-		if r == '\n' || x > w {
-			y++
-			x = 0
-		}
-		if y > h {
+		f.screen.setContent(&x, &y, r, style)
+
+		if y > h-1 {
 			break
 		}
 	}

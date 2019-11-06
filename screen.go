@@ -35,3 +35,34 @@ func (s *screen) loop() {
 		}
 	}
 }
+
+func (s *screen) setContent(xp, yp *int, r rune, style tcell.Style) {
+	w, _ := s.Size()
+	x, y := *xp, *yp
+
+	ch := r
+	if r == '\t' || r == '\n' {
+		ch = '\x00'
+	}
+
+	l := 1
+	if r == '\t' {
+		l = 8
+	}
+
+	for i := 0; i < l; i++ {
+		s.SetContent(x, y, ch, nil, style)
+		x++
+		if x > w-1 {
+			x = 0
+			y++
+		}
+	}
+
+	if r == '\n' {
+		y++
+		x = 0
+	}
+
+	*xp, *yp = x, y
+}
