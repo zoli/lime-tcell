@@ -24,8 +24,7 @@ func newFrontend() (*frontend, error) {
 }
 
 func (f *frontend) init() {
-	initEditor()
-	f.editor = backend.GetEditor()
+	f.editor = initEditor()
 	f.editor.SetFrontend(f)
 }
 

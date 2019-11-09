@@ -2,11 +2,18 @@ package main
 
 import "github.com/limetext/backend"
 
-func initEditor() {
+func initEditor() *backend.Editor {
 	setCallBacks()
 
 	ed := backend.GetEditor()
+	ed.AddPackagesPath("./packages")
+	ed.Init()
+	ed.SetDefaultPath("./packages/Default")
+	ed.SetUserPath("./packages/User")
 	ed.NewWindow()
+	ed.ActiveWindow().NewFile()
+
+	return ed
 }
 
 func setCallBacks() {
