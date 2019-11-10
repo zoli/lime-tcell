@@ -1,0 +1,8 @@
+{
+	"folders":
+	[
+		{ "path": "." },
+		{ "path": "~/Code/go/src/github.com/limetext/backend" },
+		{ "path": "~/Code/go/src/github.com/limetext/commands" },
+	]
+}
