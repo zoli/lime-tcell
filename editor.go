@@ -11,7 +11,6 @@ func initEditor() *backend.Editor {
 	ed.SetDefaultPath("./packages/Default")
 	ed.SetUserPath("./packages/User")
 	ed.NewWindow()
-	ed.ActiveWindow().NewFile()
 
 	return ed
 }

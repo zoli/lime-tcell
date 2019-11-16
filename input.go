@@ -6,6 +6,10 @@ import (
 	"github.com/limetext/backend/log"
 )
 
+type inputHandler interface {
+	HandleInput(keys.KeyPress)
+}
+
 var keymap = map[tcell.Key]keys.KeyPress{
 	tcell.KeyUp:     keys.KeyPress{Key: keys.Up},
 	tcell.KeyDown:   keys.KeyPress{Key: keys.Down},

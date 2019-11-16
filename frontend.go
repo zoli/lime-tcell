@@ -7,8 +7,9 @@ import (
 )
 
 type frontend struct {
-	screen *screen
-	editor *backend.Editor
+	screen       *screen
+	editor       *backend.Editor
+	inputHandler inputHandler
 }
 
 func newFrontend() (*frontend, error) {
@@ -26,6 +27,7 @@ func newFrontend() (*frontend, error) {
 func (f *frontend) init() {
 	f.editor = initEditor()
 	f.editor.SetFrontend(f)
+	f.inputHandler = f.editor
 }
 
 func (f *frontend) shutDown() {
@@ -38,15 +40,14 @@ func (f *frontend) shutDown() {
 }
 
 func (f *frontend) loop() {
-	for {
-		ev := f.screen.PollEvent()
+	for ; ; ev := f.screen.PollEvent() {
 		switch ev := ev.(type) {
 		case *tcell.EventKey:
+			kp := keyPress(ev)
 			switch ev.Key() {
 			case tcell.KeyCtrlQ:
 				return
 			default:
-				kp := keyPress(ev)
 				f.editor.HandleInput(kp)
 			}
 		}
