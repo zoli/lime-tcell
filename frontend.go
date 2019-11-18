@@ -1,16 +1,30 @@
 package main
 
 import (
-	"github.com/gdamore/tcell"
 	"github.com/limetext/backend"
+	"github.com/limetext/backend/keys"
 	"github.com/limetext/text"
+
+	"github.com/gdamore/tcell"
 )
 
-type frontend struct {
-	screen       *screen
-	editor       *backend.Editor
-	inputHandler inputHandler
-}
+type (
+	frontend struct {
+		screen       *screen
+		editor       *backend.Editor
+		layouts      []layout
+		activeLayout layout
+	}
+
+	layout interface {
+		HandleInput(keys.KeyPress)
+		Render(text.Region)
+		Position() (int, int)
+		Dimension() (int, int)
+		SetPosition(int, int)
+		SetDimension(int, int)
+	}
+)
 
 func newFrontend() (*frontend, error) {
 	f := new(frontend)
@@ -27,7 +41,6 @@ func newFrontend() (*frontend, error) {
 func (f *frontend) init() {
 	f.editor = initEditor()
 	f.editor.SetFrontend(f)
-	f.inputHandler = f.editor
 }
 
 func (f *frontend) shutDown() {
@@ -37,44 +50,6 @@ func (f *frontend) shutDown() {
 	}
 
 	f.screen.Fini()
-}
-
-func (f *frontend) loop() {
-	for ; ; ev := f.screen.PollEvent() {
-		switch ev := ev.(type) {
-		case *tcell.EventKey:
-			kp := keyPress(ev)
-			switch ev.Key() {
-			case tcell.KeyCtrlQ:
-				return
-			default:
-				f.editor.HandleInput(kp)
-			}
-		}
-	}
-}
-
-func (f *frontend) render(v *backend.View) {
-	_, h := f.screen.Size()
-	x, y := 0, 0
-	style, reverseStyle := defaultStyle, defaultStyle.Reverse(true)
-
-	runes := v.Substr(text.Region{0, v.Size()})
-	sel := v.Sel()
-	for i, r := range runes {
-		style = defaultStyle
-		if sel.Contains(text.Region{i, i}) {
-			style = reverseStyle
-		}
-
-		f.screen.setContent(&x, &y, r, style)
-
-		if y > h-1 {
-			break
-		}
-	}
-
-	f.screen.Show()
 }
 
 func (f *frontend) VisibleRegion(v *backend.View) text.Region {
@@ -102,5 +77,41 @@ func (f *frontend) OkCancelDialog(msg string, okname string) bool {
 }
 
 func (f *frontend) Prompt(title, folder string, flags int) []string {
-	return nil
+	w, h := f.screen.Size()
+	ch := make(chan string)
+	p := newPrompt(folder, ch, 0, 0, w, h)
+
+	activeLay := f.activeLayout
+	f.addLayout(p)
+	f.activeLayout.Render(text.Region{})
+	s := <-ch
+
+	f.activeLayout = activeLay
+
+	return []string{s}
+}
+
+func (f *frontend) addLayout(lay layout) {
+	f.layouts = append(f.layouts, lay)
+	f.activeLayout = lay
+}
+
+func (f *frontend) loop() {
+	for {
+		ev := f.screen.PollEvent()
+		switch ev := ev.(type) {
+		case *tcell.EventKey:
+			kp := keyPress(ev)
+			switch ev.Key() {
+			case tcell.KeyCtrlQ:
+				return
+			default:
+				if f.activeLayout != nil {
+					f.activeLayout.HandleInput(kp)
+				} else {
+					f.editor.HandleInput(kp)
+				}
+			}
+		}
+	}
 }

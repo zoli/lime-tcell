@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	defaultStyle = tcell.StyleDefault
+	defStyle = tcell.StyleDefault
 )
 
 type screen struct {
