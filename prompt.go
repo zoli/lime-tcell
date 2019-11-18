@@ -12,15 +12,16 @@ import (
 )
 
 type prompt struct {
-	dir, submBtn, discBtn string
-	ch                    chan string
-	lines                 []string
-	selected              int
-	x, y, w, h            int
+	layout
+	dir              string
+	submBtn, discBtn string
+	ch               chan string
+	lines            []string
+	selected         int
 }
 
 func newPrompt(dir string, ch chan string, x, y, w, h int) *prompt {
-	return &prompt{dir: dir, ch: ch, x: x, y: y, w: w, h: h}
+	return &prompt{dir: dir, ch: ch, layout: createLayout(x, y, w, h)}
 }
 
 func (p *prompt) HandleInput(kp keys.KeyPress) {
@@ -102,22 +103,6 @@ func (p *prompt) Render(r text.Region) {
 	}
 
 	fe.screen.Show()
-}
-
-func (p *prompt) Position() (int, int) {
-	return p.x, p.y
-}
-
-func (p *prompt) Dimension() (int, int) {
-	return p.w, p.h
-}
-
-func (p *prompt) SetPosition(x, y int) {
-	p.x, p.y = x, y
-}
-
-func (p *prompt) SetDimension(w, h int) {
-	p.w, p.h = w, h
 }
 
 func (p *prompt) init() {

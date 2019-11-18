@@ -2,29 +2,17 @@ package main
 
 import (
 	"github.com/limetext/backend"
-	"github.com/limetext/backend/keys"
 	"github.com/limetext/text"
 
 	"github.com/gdamore/tcell"
 )
 
-type (
-	frontend struct {
-		screen       *screen
-		editor       *backend.Editor
-		layouts      []layout
-		activeLayout layout
-	}
-
-	layout interface {
-		HandleInput(keys.KeyPress)
-		Render(text.Region)
-		Position() (int, int)
-		Dimension() (int, int)
-		SetPosition(int, int)
-		SetDimension(int, int)
-	}
-)
+type frontend struct {
+	screen       *screen
+	editor       *backend.Editor
+	widgets      []widget
+	activeWidget widget
+}
 
 func newFrontend() (*frontend, error) {
 	f := new(frontend)
@@ -81,19 +69,19 @@ func (f *frontend) Prompt(title, folder string, flags int) []string {
 	ch := make(chan string)
 	p := newPrompt(folder, ch, 0, 0, w, h)
 
-	activeLay := f.activeLayout
-	f.addLayout(p)
-	f.activeLayout.Render(text.Region{})
+	activeLay := f.activeWidget
+	f.addWidget(p)
+	f.activeWidget.Render(text.Region{})
 	s := <-ch
 
-	f.activeLayout = activeLay
+	f.activeWidget = activeLay
 
 	return []string{s}
 }
 
-func (f *frontend) addLayout(lay layout) {
-	f.layouts = append(f.layouts, lay)
-	f.activeLayout = lay
+func (f *frontend) addWidget(w widget) {
+	f.widgets = append(f.widgets, w)
+	f.activeWidget = w
 }
 
 func (f *frontend) loop() {
@@ -106,12 +94,20 @@ func (f *frontend) loop() {
 			case tcell.KeyCtrlQ:
 				return
 			default:
-				if f.activeLayout != nil {
-					f.activeLayout.HandleInput(kp)
+				if f.activeWidget != nil {
+					f.activeWidget.HandleInput(kp)
 				} else {
 					f.editor.HandleInput(kp)
 				}
 			}
 		}
 	}
+}
+
+func (f *frontend) newView(bv *backend.View) {
+	w, h := f.screen.Size()
+	v := newView(bv, 0, 0, w, h)
+
+	f.addWidget(v)
+	f.activeWidget.Render(text.Region{})
 }
