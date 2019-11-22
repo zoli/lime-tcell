@@ -7,66 +7,66 @@ import (
 )
 
 var (
-	keymap = map[tcell.Key]keys.KeyPress{
-		tcell.KeyUp:        keys.KeyPress{Key: keys.Up},
-		tcell.KeyDown:      keys.KeyPress{Key: keys.Down},
-		tcell.KeyRight:     keys.KeyPress{Key: keys.Right},
-		tcell.KeyLeft:      keys.KeyPress{Key: keys.Left},
-		tcell.KeyPgUp:      keys.KeyPress{Key: keys.PageUp},
-		tcell.KeyPgDn:      keys.KeyPress{Key: keys.PageDown},
-		tcell.KeyHome:      keys.KeyPress{Key: keys.Home},
-		tcell.KeyEnd:       keys.KeyPress{Key: keys.End},
-		tcell.KeyInsert:    keys.KeyPress{Key: keys.Insert},
-		tcell.KeyDelete:    keys.KeyPress{Key: keys.Delete},
-		tcell.KeyF1:        keys.KeyPress{Key: keys.F1},
-		tcell.KeyF2:        keys.KeyPress{Key: keys.F2},
-		tcell.KeyF3:        keys.KeyPress{Key: keys.F3},
-		tcell.KeyF4:        keys.KeyPress{Key: keys.F4},
-		tcell.KeyF5:        keys.KeyPress{Key: keys.F5},
-		tcell.KeyF6:        keys.KeyPress{Key: keys.F6},
-		tcell.KeyF7:        keys.KeyPress{Key: keys.F7},
-		tcell.KeyF8:        keys.KeyPress{Key: keys.F8},
-		tcell.KeyF9:        keys.KeyPress{Key: keys.F9},
-		tcell.KeyF10:       keys.KeyPress{Key: keys.F10},
-		tcell.KeyF11:       keys.KeyPress{Key: keys.F11},
-		tcell.KeyF12:       keys.KeyPress{Key: keys.F12},
-		tcell.KeyBackspace: keys.KeyPress{Key: keys.Backspace},
-		tcell.KeyTab:       keys.KeyPress{Key: '\t'},
-		tcell.KeyEscape:    keys.KeyPress{Key: keys.Escape},
-		tcell.KeyEnter:     keys.KeyPress{Key: keys.Enter},
-		tcell.KeyDEL:       keys.KeyPress{Key: keys.Delete},
+	keymap = map[tcell.Key]keys.Key{
+		tcell.KeyUp:        keys.Up,
+		tcell.KeyDown:      keys.Down,
+		tcell.KeyRight:     keys.Right,
+		tcell.KeyLeft:      keys.Left,
+		tcell.KeyPgUp:      keys.PageUp,
+		tcell.KeyPgDn:      keys.PageDown,
+		tcell.KeyHome:      keys.Home,
+		tcell.KeyEnd:       keys.End,
+		tcell.KeyInsert:    keys.Insert,
+		tcell.KeyDelete:    keys.Delete,
+		tcell.KeyF1:        keys.F1,
+		tcell.KeyF2:        keys.F2,
+		tcell.KeyF3:        keys.F3,
+		tcell.KeyF4:        keys.F4,
+		tcell.KeyF5:        keys.F5,
+		tcell.KeyF6:        keys.F6,
+		tcell.KeyF7:        keys.F7,
+		tcell.KeyF8:        keys.F8,
+		tcell.KeyF9:        keys.F9,
+		tcell.KeyF10:       keys.F10,
+		tcell.KeyF11:       keys.F11,
+		tcell.KeyF12:       keys.F12,
+		tcell.KeyBackspace: keys.Backspace,
+		tcell.KeyTab:       '\t',
+		tcell.KeyEscape:    keys.Escape,
+		tcell.KeyEnter:     keys.Enter,
+		tcell.KeyDEL:       keys.Delete,
 	}
 
-	ctrlKeysMap = map[tcell.Key]keys.KeyPress{
-		tcell.KeyCtrlSpace:     keys.KeyPress{Ctrl: true, Key: ' '},
-		tcell.KeyCtrlA:         keys.KeyPress{Ctrl: true, Key: 'a'},
-		tcell.KeyCtrlB:         keys.KeyPress{Ctrl: true, Key: 'b'},
-		tcell.KeyCtrlC:         keys.KeyPress{Ctrl: true, Key: 'c'},
-		tcell.KeyCtrlD:         keys.KeyPress{Ctrl: true, Key: 'd'},
-		tcell.KeyCtrlE:         keys.KeyPress{Ctrl: true, Key: 'e'},
-		tcell.KeyCtrlF:         keys.KeyPress{Ctrl: true, Key: 'f'},
-		tcell.KeyCtrlG:         keys.KeyPress{Ctrl: true, Key: 'g'},
-		tcell.KeyCtrlH:         keys.KeyPress{Ctrl: true, Key: 'h'},
-		tcell.KeyCtrlI:         keys.KeyPress{Ctrl: true, Key: 'i'},
-		tcell.KeyCtrlJ:         keys.KeyPress{Ctrl: true, Key: 'j'},
-		tcell.KeyCtrlK:         keys.KeyPress{Ctrl: true, Key: 'k'},
-		tcell.KeyCtrlL:         keys.KeyPress{Ctrl: true, Key: 'l'},
-		tcell.KeyCtrlM:         keys.KeyPress{Ctrl: true, Key: 'm'},
-		tcell.KeyCtrlN:         keys.KeyPress{Ctrl: true, Key: 'n'},
-		tcell.KeyCtrlO:         keys.KeyPress{Ctrl: true, Key: 'o'},
-		tcell.KeyCtrlP:         keys.KeyPress{Ctrl: true, Key: 'p'},
-		tcell.KeyCtrlQ:         keys.KeyPress{Ctrl: true, Key: 'q'},
-		tcell.KeyCtrlR:         keys.KeyPress{Ctrl: true, Key: 'r'},
-		tcell.KeyCtrlS:         keys.KeyPress{Ctrl: true, Key: 's'},
-		tcell.KeyCtrlT:         keys.KeyPress{Ctrl: true, Key: 't'},
-		tcell.KeyCtrlU:         keys.KeyPress{Ctrl: true, Key: 'u'},
-		tcell.KeyCtrlV:         keys.KeyPress{Ctrl: true, Key: 'v'},
-		tcell.KeyCtrlW:         keys.KeyPress{Ctrl: true, Key: 'w'},
-		tcell.KeyCtrlX:         keys.KeyPress{Ctrl: true, Key: 'x'},
-		tcell.KeyCtrlY:         keys.KeyPress{Ctrl: true, Key: 'y'},
-		tcell.KeyCtrlZ:         keys.KeyPress{Ctrl: true, Key: 'z'},
-		tcell.KeyCtrlLeftSq:    keys.KeyPress{Ctrl: true, Key: keys.Escape},
-		tcell.KeyCtrlBackslash: keys.KeyPress{Ctrl: true, Key: '\\'},
+	ctrlKeyMap = map[tcell.Key]keys.Key{
+		tcell.KeyCtrlSpace:     ' ',
+		tcell.KeyCtrlA:         'a',
+		tcell.KeyCtrlB:         'b',
+		tcell.KeyCtrlC:         'c',
+		tcell.KeyCtrlD:         'd',
+		tcell.KeyCtrlE:         'e',
+		tcell.KeyCtrlF:         'f',
+		tcell.KeyCtrlG:         'g',
+		tcell.KeyCtrlH:         'h',
+		tcell.KeyCtrlI:         'i',
+		tcell.KeyCtrlJ:         'j',
+		tcell.KeyCtrlK:         'k',
+		tcell.KeyCtrlL:         'l',
+		tcell.KeyCtrlM:         'm',
+		tcell.KeyCtrlN:         'n',
+		tcell.KeyCtrlO:         'o',
+		tcell.KeyCtrlP:         'p',
+		tcell.KeyCtrlQ:         'q',
+		tcell.KeyCtrlR:         'r',
+		tcell.KeyCtrlS:         's',
+		tcell.KeyCtrlT:         't',
+		tcell.KeyCtrlU:         'u',
+		tcell.KeyCtrlV:         'v',
+		tcell.KeyCtrlW:         'w',
+		tcell.KeyCtrlX:         'x',
+		tcell.KeyCtrlY:         'y',
+		tcell.KeyCtrlZ:         'z',
+		tcell.KeyCtrlLeftSq:    keys.Escape,
+		tcell.KeyCtrlBackslash: '\\',
 	}
 )
 
@@ -80,10 +80,11 @@ func keyPress(ek *tcell.EventKey) keys.KeyPress {
 
 	if key := ek.Key(); key == tcell.KeyRune {
 		kp.Text = string(ek.Rune())
-	} else if k, ok := ctrlKeysMap[key]; kp.Ctrl && ok {
-		kp = k
+		kp.Key = keys.Key(ek.Rune())
+	} else if k, ok := ctrlKeyMap[key]; kp.Ctrl && ok {
+		kp.Key = k
 	} else if k, ok := keymap[key]; ok {
-		kp = k
+		kp.Key = k
 	} else {
 		log.Warn("unrecognized key key: %v", key)
 	}

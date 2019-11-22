@@ -36,7 +36,7 @@ func (s *screen) setContent(xp, yp *int, r rune, style tcell.Style) {
 
 	l := 1
 	if r == '\t' {
-		l = 8
+		l = 4
 	}
 
 	for i := 0; i < l; i++ {

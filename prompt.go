@@ -6,6 +6,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/limetext/backend"
 	"github.com/limetext/backend/keys"
 	"github.com/limetext/backend/log"
 	"github.com/limetext/text"
@@ -76,6 +77,10 @@ func (p *prompt) MoveDown() {
 	} else {
 		p.selected++
 	}
+}
+
+func (p *prompt) BackendView() *backend.View {
+	return nil
 }
 
 func (p *prompt) Render(r text.Region) {

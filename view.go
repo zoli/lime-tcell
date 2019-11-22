@@ -22,14 +22,14 @@ func (v *view) HandleInput(kp keys.KeyPress) {
 func (v *view) Render(r text.Region) {
 	fe.screen.Clear()
 	x, y := v.x, v.y
-	style, reverseStyle := defStyle, defStyle.Reverse(true)
+	style, revStyle := defStyle, defStyle.Reverse(true)
 
-	runes := v.bv.Substr(text.Region{0, v.bv.Size()})
 	sel := v.bv.Sel()
+	runes := v.bv.Substr(text.Region{0, v.bv.Size()})
 	for i, r := range runes {
 		style = defStyle
 		if sel.Contains(text.Region{i, i}) {
-			style = reverseStyle
+			style = revStyle
 		}
 
 		fe.screen.setContent(&x, &y, r, style)
