@@ -1,7 +1,4 @@
 [
-	{ "keys": ["ctrl+shift+n"], "command": "new_window"},
-	{ "keys": ["ctrl+shift+w"], "command": "close_window"},
-
 	{ "keys": ["ctrl+n"], "command": "new_file"},
 	{ "keys": ["ctrl+s"], "command": "save"},
 	{ "keys": ["ctrl+w"], "command": "close"},

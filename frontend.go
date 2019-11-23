@@ -2,17 +2,27 @@ package main
 
 import (
 	"github.com/limetext/backend"
+	"github.com/limetext/backend/keys"
 	"github.com/limetext/text"
 
 	"github.com/gdamore/tcell"
 )
 
-type frontend struct {
-	screen       *screen
-	editor       *backend.Editor
-	widgets      map[*backend.View]widget
-	activeWidget widget
-}
+type (
+	frontend struct {
+		screen  *screen
+		editor  *backend.Editor
+		widgets map[*backend.View]widget
+		overlay widget
+	}
+
+	widget interface {
+		HandleInput(keys.KeyPress)
+		Render(text.Region)
+		VisibleRegion() text.Region
+		layout
+	}
+)
 
 func newFrontend() (*frontend, error) {
 	f := new(frontend)
@@ -41,17 +51,17 @@ func (f *frontend) shutDown() {
 	f.screen.Fini()
 }
 
-func (f *frontend) VisibleRegion(v *backend.View) text.Region {
+func (f *frontend) VisibleRegion(bv *backend.View) text.Region {
+	if w := f.widgets[bv]; w != nil {
+		return w.VisibleRegion()
+	}
 	return text.Region{}
 }
 
 func (f *frontend) Show(bv *backend.View, r text.Region) {
-	w := f.widgets[bv]
-	if w == nil {
-		return
+	if w := f.widgets[bv]; w != nil {
+		w.Render(r)
 	}
-
-	w.Render(text.Region{})
 }
 
 func (f *frontend) StatusMessage(s string) {
@@ -75,12 +85,12 @@ func (f *frontend) Prompt(title, folder string, flags int) []string {
 	ch := make(chan string)
 	p := newPrompt(folder, ch, 0, 0, w, h)
 
-	aw := f.activeWidget
-	f.activeWidget = p
-	f.activeWidget.Render(text.Region{})
+	hold := f.overlay
+	f.overlay = p
+	f.overlay.Render(text.Region{})
 
 	s := <-ch
-	f.activeWidget = aw
+	f.overlay = hold
 
 	return []string{s}
 }
@@ -94,8 +104,8 @@ func (f *frontend) loop() {
 			case tcell.KeyCtrlQ:
 				return
 			default:
-				if f.activeWidget != nil {
-					f.activeWidget.HandleInput(kp)
+				if f.overlay != nil {
+					f.overlay.HandleInput(kp)
 				} else {
 					f.editor.HandleInput(kp)
 				}
@@ -109,10 +119,14 @@ func (f *frontend) newView(bv *backend.View) {
 	v := newView(bv, 0, 0, w, h)
 
 	f.widgets[bv] = v
-	f.activeWidget = v
-	f.activeWidget.Render(text.Region{})
+	f.Render(bv)
 }
 
 func (f *frontend) Render(bv *backend.View) {
-	f.Show(bv, text.Region{})
+	r := text.Region{}
+	if w := f.widgets[bv]; w != nil {
+		r = w.VisibleRegion()
+	}
+
+	f.Show(bv, r)
 }

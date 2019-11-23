@@ -13,7 +13,7 @@ import (
 )
 
 type prompt struct {
-	layout
+	basicLayout
 	dir              string
 	submBtn, discBtn string
 	ch               chan string
@@ -22,7 +22,7 @@ type prompt struct {
 }
 
 func newPrompt(dir string, ch chan string, x, y, w, h int) *prompt {
-	return &prompt{dir: dir, ch: ch, layout: createLayout(x, y, w, h)}
+	return &prompt{dir: dir, ch: ch, basicLayout: createLayout(x, y, w, h)}
 }
 
 func (p *prompt) HandleInput(kp keys.KeyPress) {
@@ -108,6 +108,10 @@ func (p *prompt) Render(r text.Region) {
 	}
 
 	fe.screen.Show()
+}
+
+func (p *prompt) VisibleRegion() text.Region {
+	return text.Region{}
 }
 
 func (p *prompt) init() {
