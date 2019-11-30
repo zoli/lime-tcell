@@ -1,6 +1,14 @@
 package main
 
+import "github.com/limetext/backend/keys"
+
 type (
+	widget interface {
+		HandleInput(keys.KeyPress)
+		Render()
+		layout
+	}
+
 	layout interface {
 		Position() (int, int)
 		Dimension() (int, int)

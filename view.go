@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/limetext/backend"
-	"github.com/limetext/backend/keys"
 	"github.com/limetext/text"
 )
 
@@ -14,10 +13,6 @@ type view struct {
 
 func newView(bv *backend.View, x, y, w, h int) *view {
 	return &view{bv: bv, basicLayout: createLayout(x, y, w, h)}
-}
-
-func (v *view) HandleInput(kp keys.KeyPress) {
-	backend.GetEditor().HandleInput(kp)
 }
 
 func (v *view) Render(r text.Region) {

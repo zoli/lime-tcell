@@ -6,10 +6,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/limetext/backend"
 	"github.com/limetext/backend/keys"
 	"github.com/limetext/backend/log"
-	"github.com/limetext/text"
 )
 
 type prompt struct {
@@ -29,16 +27,13 @@ func (p *prompt) HandleInput(kp keys.KeyPress) {
 	switch kp.Key {
 	case keys.Up:
 		p.MoveUp()
-		break
 	case keys.Down:
 		p.MoveDown()
-		break
 	case keys.Enter:
 		p.Select()
-		break
 	}
 
-	p.Render(text.Region{})
+	p.Render()
 }
 
 func (p *prompt) Select() {
@@ -79,20 +74,16 @@ func (p *prompt) MoveDown() {
 	}
 }
 
-func (p *prompt) BackendView() *backend.View {
-	return nil
-}
-
-func (p *prompt) Render(r text.Region) {
+func (p *prompt) Render() {
 	p.init()
-	x, y := p.x, p.y
-	style, revStyle := defStyle, defStyle.Reverse(true)
+	x, y := p.Position()
+	style := defStyle
 
 	fe.screen.Clear()
 	for i, l := range p.lines {
 		style = defStyle
 		if i == p.selected {
-			style = revStyle
+			style = style.Reverse(true)
 		}
 
 		runes := []rune(l)
@@ -108,10 +99,6 @@ func (p *prompt) Render(r text.Region) {
 	}
 
 	fe.screen.Show()
-}
-
-func (p *prompt) VisibleRegion() text.Region {
-	return text.Region{}
 }
 
 func (p *prompt) init() {

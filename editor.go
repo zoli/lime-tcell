@@ -16,7 +16,10 @@ func initEditor() *backend.Editor {
 }
 
 func setCallBacks() {
-	backend.OnLoad.Add(fe.newView)
+	backend.OnNew.Add(fe.newView)
+
+	backend.OnClose.Add(fe.closeView)
+
 	backend.OnModified.Add(fe.Render)
 	backend.OnSelectionModified.Add(fe.Render)
 }
