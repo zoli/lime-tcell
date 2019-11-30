@@ -33,13 +33,25 @@ func (p *prompt) HandleInput(kp keys.KeyPress) {
 		p.Select()
 	case keys.Escape:
 		p.Discard()
+		return
 	}
+
+	p.Render()
 }
 
 func (p *prompt) Select() {
-	name := path.Join(p.dir, p.lines[p.selected])
-	fi, err := os.Stat(name)
-	isDir := err == nil && fi.IsDir()
+	var (
+		name  string
+		isDir bool
+	)
+	if s := p.lines[p.selected]; s == ".." {
+		name = path.Dir(p.dir)
+		isDir = true
+	} else {
+		name = path.Join(p.dir, s)
+		fi, err := os.Stat(name)
+		isDir = err == nil && fi.IsDir()
+	}
 
 	if isDir {
 		p.dir = name
@@ -64,8 +76,6 @@ func (p *prompt) MoveUp() {
 	} else {
 		p.selected--
 	}
-
-	p.Render()
 }
 
 func (p *prompt) MoveDown() {
@@ -74,8 +84,6 @@ func (p *prompt) MoveDown() {
 	} else {
 		p.selected++
 	}
-
-	p.Render()
 }
 
 func (p *prompt) Render() {
@@ -112,6 +120,9 @@ func (p *prompt) init() {
 	}
 
 	p.lines = make([]string, 0)
+	if p.dir != "/" {
+		p.lines = append(p.lines, "..")
+	}
 	for _, fi := range fis {
 		if strings.HasPrefix(fi.Name(), ".") {
 			continue

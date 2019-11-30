@@ -25,7 +25,10 @@ func (d *dialog) HandleInput(kp keys.KeyPress) {
 		d.Toggle()
 	case keys.Enter:
 		d.Select()
+		return
 	}
+
+	d.Render()
 }
 
 func (d *dialog) Render() {
@@ -61,7 +64,6 @@ func (d *dialog) Render() {
 
 func (d *dialog) Toggle() {
 	d.ok = !d.ok
-	d.Render()
 }
 
 func (d *dialog) Select() {
