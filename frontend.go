@@ -72,14 +72,19 @@ func (f *frontend) OkCancelDialog(msg string, okname string) bool {
 
 	ret := <-ch
 	f.overlay = nil
-	f.Render(f.editor.ActiveWindow().ActiveView())
+	if w := f.editor.ActiveWindow(); w != nil && w.ActiveView() != nil {
+		f.Render(w.ActiveView())
+	} else {
+		f.screen.Clear()
+		f.screen.Show()
+	}
 
 	return ret
 }
 
 func (f *frontend) Prompt(title, folder string, flags int) []string {
 	w, h := f.screen.Size()
-	ch := make(chan string)
+	ch := make(chan []string)
 	p := newPrompt(folder, ch, 0, 0, w, h)
 
 	f.overlay = p
@@ -87,8 +92,14 @@ func (f *frontend) Prompt(title, folder string, flags int) []string {
 
 	s := <-ch
 	f.overlay = nil
+	if w := f.editor.ActiveWindow(); w != nil && w.ActiveView() != nil {
+		f.Render(w.ActiveView())
+	} else {
+		f.screen.Clear()
+		f.screen.Show()
+	}
 
-	return []string{s}
+	return s
 }
 
 func (f *frontend) loop() {

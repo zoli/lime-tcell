@@ -14,12 +14,12 @@ type prompt struct {
 	basicLayout
 	dir              string
 	submBtn, discBtn string
-	ch               chan string
+	ch               chan []string
 	lines            []string
 	selected         int
 }
 
-func newPrompt(dir string, ch chan string, x, y, w, h int) *prompt {
+func newPrompt(dir string, ch chan []string, x, y, w, h int) *prompt {
 	return &prompt{dir: dir, ch: ch, basicLayout: createLayout(x, y, w, h)}
 }
 
@@ -31,9 +31,9 @@ func (p *prompt) HandleInput(kp keys.KeyPress) {
 		p.MoveDown()
 	case keys.Enter:
 		p.Select()
+	case keys.Escape:
+		p.Discard()
 	}
-
-	p.Render()
 }
 
 func (p *prompt) Select() {
@@ -51,11 +51,11 @@ func (p *prompt) Select() {
 
 func (p *prompt) Submit() {
 	name := path.Join(p.dir, p.lines[p.selected])
-	p.ch <- name
+	p.ch <- []string{name}
 }
 
 func (p *prompt) Discard() {
-
+	p.ch <- nil
 }
 
 func (p *prompt) MoveUp() {
@@ -64,6 +64,8 @@ func (p *prompt) MoveUp() {
 	} else {
 		p.selected--
 	}
+
+	p.Render()
 }
 
 func (p *prompt) MoveDown() {
@@ -72,6 +74,8 @@ func (p *prompt) MoveDown() {
 	} else {
 		p.selected++
 	}
+
+	p.Render()
 }
 
 func (p *prompt) Render() {

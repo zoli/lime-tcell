@@ -1,6 +1,6 @@
 	✔	OkCancelDialog view @done (19-11-30 20:29)
 	✔	OkCancelDialog after dialog closed @done (19-11-30 20:29)
-	—	Prompt ESC
+	✔	Prompt ESC @done (19-11-30 22:49)
 	—	Prompt Folder back
 	—	MessageDialog
 	—	StatusMessage
