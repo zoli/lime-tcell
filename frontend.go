@@ -33,11 +33,6 @@ func (f *frontend) init() {
 }
 
 func (f *frontend) shutDown() {
-	for _, w := range f.editor.Windows() {
-		w.CloseAllViews()
-		w.Close()
-	}
-
 	f.screen.Fini()
 }
 
@@ -101,9 +96,6 @@ func (f *frontend) loop() {
 		switch ev := f.screen.PollEvent().(type) {
 		case *tcell.EventKey:
 			kp := keyPress(ev)
-			if kp.IsCharacter() && len(f.views) == 0 {
-				f.editor.ActiveWindow().NewFile()
-			}
 
 			if kp.Ctrl && kp.Key == 'q' {
 				return
@@ -112,6 +104,9 @@ func (f *frontend) loop() {
 			if f.overlay != nil {
 				f.overlay.HandleInput(kp)
 			} else {
+				if kp.IsCharacter() && len(f.views) == 0 {
+					f.editor.ActiveWindow().NewFile()
+				}
 				f.editor.HandleInput(kp)
 			}
 		}
@@ -127,6 +122,9 @@ func (f *frontend) newView(bv *backend.View) {
 
 func (f *frontend) closeView(bv *backend.View) {
 	delete(f.views, bv)
+
+	f.screen.Clear()
+	f.screen.Show()
 }
 
 func (f *frontend) Render(bv *backend.View) {

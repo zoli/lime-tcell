@@ -1,7 +1,8 @@
-	—	OkCancelDialog view
-	—	OkCancelDialog after dialog closed
+	✔	OkCancelDialog view @done (19-11-30 20:29)
+	✔	OkCancelDialog after dialog closed @done (19-11-30 20:29)
 	—	Prompt ESC
 	—	Prompt Folder back
 	—	MessageDialog
 	—	StatusMessage
 	—	ErrorMessage
+	—	Better and customisable log

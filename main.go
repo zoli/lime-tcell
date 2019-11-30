@@ -31,6 +31,5 @@ func shutDown() {
 	log.Debug(util.Prof)
 	if err := recover(); err != nil {
 		log.Critical(err)
-		panic(err)
 	}
 }

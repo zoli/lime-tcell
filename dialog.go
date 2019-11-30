@@ -13,6 +13,7 @@ type dialog struct {
 func newDialog(msg string, ch chan bool, x, y, w, h int) *dialog {
 	return &dialog{
 		msg:   msg,
+		ch:    ch,
 		okBtn: "Ok", cancelBtn: "Cancel",
 		basicLayout: createLayout(x, y, w, h),
 	}
@@ -25,7 +26,6 @@ func (d *dialog) HandleInput(kp keys.KeyPress) {
 	case keys.Enter:
 		d.Select()
 	}
-
 	d.Render()
 }
 
