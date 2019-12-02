@@ -2,8 +2,5 @@
 	✔	OkCancelDialog after dialog closed @done (19-11-30 20:29)
 	✔	Prompt ESC @done (19-11-30 22:49)
 	✔	Prompt Folder back @done (19-11-30 23:01)
-	—	MessageDialog
-	—	StatusMessage
-	—	ErrorMessage
-	—	Better and customisable log
+	✔	Show correct file for log @done (19-12-02 21:05)
 	—	Tests
