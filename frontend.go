@@ -27,9 +27,11 @@ func newFrontend() (*frontend, error) {
 	return f, nil
 }
 
-func (f *frontend) init() {
+func (f *frontend) init() error {
 	f.editor = initEditor()
 	f.editor.SetFrontend(f)
+
+	return f.screen.Init()
 }
 
 func (f *frontend) shutDown() {
