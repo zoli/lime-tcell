@@ -21,8 +21,8 @@ type (
 	}
 )
 
-func createLayout(x, y, w, h int) basicLayout {
-	return basicLayout{x, y, w, h}
+func newLayout(x, y, w, h int) layout {
+	return &basicLayout{x, y, w, h}
 }
 
 func (bl *basicLayout) Position() (int, int) {

@@ -18,10 +18,6 @@ func newScreen() (*screen, error) {
 		return nil, err
 	}
 
-	if err = s.Init(); err != nil {
-		return nil, err
-	}
-
 	return &screen{Screen: s}, nil
 }
 

@@ -6,13 +6,13 @@ import (
 )
 
 type view struct {
-	basicLayout
+	layout
 	bv *backend.View
 	vr text.Region
 }
 
-func newView(bv *backend.View, x, y, w, h int) *view {
-	return &view{bv: bv, basicLayout: createLayout(x, y, w, h)}
+func newView(bv *backend.View, lay layout) *view {
+	return &view{bv: bv, layout: lay}
 }
 
 func (v *view) Render(r text.Region) {

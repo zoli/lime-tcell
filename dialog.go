@@ -3,19 +3,19 @@ package main
 import "github.com/limetext/backend/keys"
 
 type dialog struct {
-	basicLayout
+	layout
 	msg              string
 	okBtn, cancelBtn string
 	ch               chan bool
 	ok               bool
 }
 
-func newDialog(msg string, ch chan bool, x, y, w, h int) *dialog {
+func newDialog(msg string, ch chan bool, lay layout) *dialog {
 	return &dialog{
 		msg:   msg,
 		ch:    ch,
 		okBtn: "Ok", cancelBtn: "Cancel",
-		basicLayout: createLayout(x, y, w, h),
+		layout: lay,
 	}
 }
 

@@ -66,7 +66,7 @@ func (f *frontend) MessageDialog(s string) {
 func (f *frontend) OkCancelDialog(msg string, okname string) bool {
 	w, h := f.screen.Size()
 	ch := make(chan bool)
-	d := newDialog(msg, ch, 0, 0, w, h)
+	d := newDialog(msg, ch, newLayout(0, 0, w, h))
 	d.okBtn = okname
 
 	f.overlay = d
@@ -87,7 +87,7 @@ func (f *frontend) OkCancelDialog(msg string, okname string) bool {
 func (f *frontend) Prompt(title, folder string, flags int) []string {
 	w, h := f.screen.Size()
 	ch := make(chan []string)
-	p := newPrompt(folder, ch, 0, 0, w, h)
+	p := newPrompt(folder, ch, newLayout(0, 0, w, h))
 
 	f.overlay = p
 	f.overlay.Render()
@@ -128,7 +128,7 @@ func (f *frontend) loop() {
 
 func (f *frontend) newView(bv *backend.View) {
 	w, h := f.screen.Size()
-	v := newView(bv, 0, 0, w, h)
+	v := newView(bv, newLayout(0, 0, w, h))
 
 	f.views[bv] = v
 }
