@@ -131,6 +131,9 @@ func (f *frontend) newView(bv *backend.View) {
 	v := newView(bv, newLayout(0, 0, w, h))
 
 	f.views[bv] = v
+
+	f.screen.Clear()
+	f.screen.Show()
 }
 
 func (f *frontend) closeView(bv *backend.View) {
@@ -142,8 +145,8 @@ func (f *frontend) closeView(bv *backend.View) {
 
 func (f *frontend) Render(bv *backend.View) {
 	r := text.Region{}
-	if w := f.views[bv]; w != nil {
-		r = w.VisibleRegion()
+	if v := f.views[bv]; v != nil {
+		r = v.VisibleRegion()
 	}
 
 	f.Show(bv, r)

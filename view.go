@@ -22,6 +22,7 @@ func (v *view) Render(r text.Region) {
 	x, y := v.Position()
 	_, h := v.Dimension()
 	style := defStyle
+
 	runes, sel := v.bv.Substr(v.VisibleRegion()), v.bv.Sel()
 	for i, r := range runes {
 		style = defStyle
