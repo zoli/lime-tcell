@@ -42,3 +42,8 @@ func closeAll() {
 
 	fe.editor.NewWindow()
 }
+
+func getContent(x, y int) rune {
+	r, _, _, _ := fe.screen.GetContent(x, y)
+	return r
+}

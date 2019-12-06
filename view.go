@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/limetext/backend"
+	"github.com/limetext/backend/log"
 	"github.com/limetext/text"
 )
 
@@ -16,8 +17,9 @@ func newView(bv *backend.View, lay layout) *view {
 }
 
 func (v *view) Render(r text.Region) {
+	log.Finest("Rendering %s(%s)", v, r)
 	fe.screen.Clear()
-	v.setVisibleRegion(r)
+	v.calcVisibleRegion(r)
 
 	x, y := v.Position()
 	_, h := v.Dimension()
@@ -40,7 +42,7 @@ func (v *view) Render(r text.Region) {
 	fe.screen.Show()
 }
 
-func (v *view) setVisibleRegion(r text.Region) {
+func (v *view) calcVisibleRegion(r text.Region) {
 	_, h := v.Dimension()
 	row, _ := v.bv.RowCol(r.Begin())
 

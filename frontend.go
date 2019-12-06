@@ -46,8 +46,8 @@ func (f *frontend) VisibleRegion(bv *backend.View) text.Region {
 }
 
 func (f *frontend) Show(bv *backend.View, r text.Region) {
-	if w := f.views[bv]; w != nil {
-		w.Render(r)
+	if v := f.views[bv]; v != nil {
+		v.Render(r)
 	}
 }
 
@@ -131,16 +131,30 @@ func (f *frontend) newView(bv *backend.View) {
 	v := newView(bv, newLayout(0, 0, w, h))
 
 	f.views[bv] = v
-
-	f.screen.Clear()
-	f.screen.Show()
 }
 
 func (f *frontend) closeView(bv *backend.View) {
 	delete(f.views, bv)
 
-	f.screen.Clear()
-	f.screen.Show()
+	if len(f.views) == 0 {
+		f.screen.Clear()
+		f.screen.Show()
+		return
+	}
+
+	w := f.editor.ActiveWindow()
+	index, vs := 0, w.Views()
+	for i, v := range vs {
+		if v == bv {
+			index = i
+			break
+		}
+	}
+	index--
+	if index == -1 {
+		index = 1
+	}
+	w.SetActiveView(vs[index])
 }
 
 func (f *frontend) Render(bv *backend.View) {

@@ -25,7 +25,7 @@ func TestCreateNewViewOnCharacterInsert(t *testing.T) {
 	}
 
 	time.Sleep(500 * time.Millisecond)
-	r, _, _, _ := fe.screen.GetContent(0, 0)
+	r := getContent(0, 0)
 	if r != 's' {
 		t.Errorf("Expected character 's' in (0, 0) but got %q", r)
 	}
@@ -39,10 +39,34 @@ func TestNewViewClearsPage(t *testing.T) {
 
 	_, h := fe.screen.Size()
 	for i := 0; i < h; i++ {
-		r, _, _, _ := fe.screen.GetContent(0, i)
+		r := getContent(0, i)
 		if r != ' ' {
 			t.Errorf("Expected screen be clear but got %q in (0, %d)",
 				r, i)
 		}
+	}
+}
+
+func TestCloseViewShowsBeforeView(t *testing.T) {
+	defer closeAll()
+
+	v1 := fe.editor.ActiveWindow().NewFile()
+	edit := v1.BeginEdit()
+	v1.Insert(edit, 0, "a")
+	v1.EndEdit(edit)
+	t.Logf("(0, 0) %q", getContent(0, 0))
+
+	v2 := fe.editor.ActiveWindow().NewFile()
+	edit = v2.BeginEdit()
+	v2.Insert(edit, 0, "b")
+	v2.EndEdit(edit)
+	t.Logf("(0, 0) %q", getContent(0, 0))
+
+	v2.SetScratch(true)
+	v2.Close()
+
+	r := getContent(0, 0)
+	if r != 'a' {
+		t.Errorf("Expected character 'a' in (0, 0) but got %q", r)
 	}
 }

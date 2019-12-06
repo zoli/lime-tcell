@@ -20,6 +20,7 @@ func setCallBacks() {
 
 	backend.OnClose.Add(fe.closeView)
 
+	backend.OnActivated.Add(fe.Render)
 	backend.OnModified.Add(fe.Render)
 	backend.OnSelectionModified.Add(fe.Render)
 }
