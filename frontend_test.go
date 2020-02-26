@@ -39,8 +39,7 @@ func TestNewViewClearsPage(t *testing.T) {
 
 	_, h := fe.screen.Size()
 	for i := 0; i < h; i++ {
-		r := getContent(0, i)
-		if r != ' ' {
+		if r := getContent(0, i); r != ' ' {
 			t.Errorf("Expected screen be clear but got %q in (0, %d)",
 				r, i)
 		}

@@ -16,12 +16,16 @@ func newFe() {
 	if err != nil {
 		panic(err)
 	}
-	fe.screen.Screen = tcell.NewSimulationScreen("")
 
+	scrn := tcell.NewSimulationScreen("")
+
+	fe.screen.Screen = scrn
 	err = fe.init()
 	if err != nil {
 		panic(err)
 	}
+
+	scrn.SetSize(150, 23)
 }
 
 func postQuitEvent() {
