@@ -18,18 +18,13 @@ func newView(bv *backend.View, lay layout) *view {
 
 func (v *view) Render(r text.Region) {
 	log.Finest("Rendering %s(%s)", v.bv, r)
+	v.calcVisibleRegion(r)
 	fe.screen.Clear()
 
-	if !v.VisibleRegion().Covers(r) {
-		v.calcVisibleRegion(r)
-	}
-
 	x, y := v.Position()
-	style := defStyle
-
 	runes, sel := v.bv.Substr(v.VisibleRegion()), v.bv.Sel()
 	for i, r := range runes {
-		style = defStyle
+		style := defStyle
 		if sel.Contains(text.Region{i, i}) {
 			style = style.Reverse(true)
 		}
