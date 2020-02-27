@@ -21,8 +21,7 @@ func newScreen() (*screen, error) {
 	return &screen{Screen: s}, nil
 }
 
-func (s *screen) setContent(xp, yp *int, r rune, style tcell.Style) {
-	w, _ := s.Size()
+func (s *screen) setContent(xp, yp *int, r rune, w int, style tcell.Style) {
 	x, y := *xp, *yp
 
 	ch := r

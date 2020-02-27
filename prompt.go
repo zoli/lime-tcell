@@ -89,7 +89,7 @@ func (p *prompt) MoveDown() {
 func (p *prompt) Render() {
 	p.init()
 	px, py := p.Position()
-	_, h := p.Dimension()
+	w, h := p.Dimension()
 	x, y, style := px, py, defStyle
 
 	fe.screen.Clear()
@@ -101,7 +101,7 @@ func (p *prompt) Render() {
 
 		runes := []rune(l)
 		for _, r := range runes {
-			fe.screen.setContent(&x, &y, r, style)
+			fe.screen.setContent(&x, &y, r, w, style)
 		}
 
 		y++

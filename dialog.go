@@ -32,13 +32,14 @@ func (d *dialog) HandleInput(kp keys.KeyPress) {
 }
 
 func (d *dialog) Render() {
+	w, _ := d.Dimension()
 	x, y := d.Position()
 	style := defStyle
 
 	fe.screen.Clear()
 
 	for _, r := range d.msg {
-		fe.screen.setContent(&x, &y, r, style)
+		fe.screen.setContent(&x, &y, r, w, style)
 	}
 	x = 0
 	y += 2
@@ -47,7 +48,7 @@ func (d *dialog) Render() {
 		style = style.Reverse(true)
 	}
 	for _, r := range d.okBtn {
-		fe.screen.setContent(&x, &y, r, style)
+		fe.screen.setContent(&x, &y, r, w, style)
 	}
 	x += 4
 
@@ -56,7 +57,7 @@ func (d *dialog) Render() {
 		style = style.Reverse(true)
 	}
 	for _, r := range d.cancelBtn {
-		fe.screen.setContent(&x, &y, r, style)
+		fe.screen.setContent(&x, &y, r, w, style)
 	}
 
 	fe.screen.Show()

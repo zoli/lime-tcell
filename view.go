@@ -17,11 +17,14 @@ func newView(bv *backend.View, lay layout) *view {
 }
 
 func (v *view) Render(r text.Region) {
-	log.Finest("Rendering %s(%s)", v.bv, r)
 	v.calcVisibleRegion(r)
+	log.Finest("Rendering %s, %s", v.bv, v.vr)
+
 	fe.screen.Clear()
 
+	w, _ := v.Dimension()
 	x, y := v.Position()
+
 	runes, sel := v.bv.Substr(v.VisibleRegion()), v.bv.Sel()
 	for i, r := range runes {
 		style := defStyle
@@ -29,7 +32,7 @@ func (v *view) Render(r text.Region) {
 			style = style.Reverse(true)
 		}
 
-		fe.screen.setContent(&x, &y, r, style)
+		fe.screen.setContent(&x, &y, r, w, style)
 	}
 
 	fe.screen.Show()

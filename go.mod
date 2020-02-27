@@ -11,3 +11,5 @@ require (
 )
 
 replace github.com/limetext/commands => ../commands
+
+replace github.com/limetext/backend => ../backend
