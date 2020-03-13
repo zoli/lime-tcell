@@ -24,11 +24,12 @@ func (v *view) Render(r text.Region) {
 
 	w, _ := v.Dimension()
 	x, y := v.Position()
+	vr, sel := v.VisibleRegion(), v.bv.Sel()
 
-	runes, sel := v.bv.Substr(v.VisibleRegion()), v.bv.Sel()
+	runes := v.bv.SubstrR(vr)
 	for i, r := range runes {
 		style := defStyle
-		if sel.Contains(text.Region{i, i}) {
+		if sel.Contains(text.Region{vr.Begin() + i, vr.Begin() + i}) {
 			style = style.Reverse(true)
 		}
 
