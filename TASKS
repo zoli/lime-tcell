@@ -4,8 +4,8 @@
 	✔	Prompt Folder back @done (19-11-30 23:01)
 	✔	Show correct file for log @done (19-12-02 21:05)
 	✔	Tests @done (19-12-03 20:41)
-	—	Move down at end of buffer should scroll
-	—	Page up, Page down
+	✔	Move down at end of buffer should scroll @done (20-03-15 21:49)
+	✔	Page up, Page down @done (20-03-15 21:49)
 	—	Show tabs
 	—	Clear previous buffer on new view
 	—	Unify view, dialog, prompt
