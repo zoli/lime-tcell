@@ -4,6 +4,7 @@ import (
 	"github.com/limetext/backend/log"
 	_ "github.com/limetext/commands"
 	"github.com/limetext/util"
+	_ "github.com/zoli/sublime"
 )
 
 var fe *frontend

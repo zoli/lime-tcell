@@ -8,6 +8,7 @@ github.com/gdamore/tcell v1.3.0 h1:r35w0JBADPZCVQijYebl6YMWWtHRqVEGt7kL2eBADRM=
 github.com/gdamore/tcell v1.3.0/go.mod h1:Hjvr+Ofd+gLglo7RYKxxnzCBmev3BzsS67MebKS4zMM=
 github.com/limetext/backend v0.0.0-20191206170531-4aa255549774 h1:eB58O+7At+yMCb97+3K7Enw5en57k8SKFWO3IOcdxdA=
 github.com/limetext/backend v0.0.0-20191206170531-4aa255549774/go.mod h1:7PNGghewgxWIJDbOAWqdjx0relsSaBSi6xBc3aZXO1Q=
+github.com/limetext/gopy v0.0.0-20191103190811-c358287c69c2/go.mod h1:WEjFQ8y7nLfOVxf6hiQHG03B5lEDwPtFu9I3gssJ/k8=
 github.com/limetext/loaders v0.0.0-20180101143455-ab38699553d3 h1:83wiOrmA2l7rcRhsFygOWS8WQ9yEXaVeWMzdKsy4Nnw=
 github.com/limetext/loaders v0.0.0-20180101143455-ab38699553d3/go.mod h1:WWOuNGkstqjGst55L4oJ7eS87ilrylgMeTeEykm/UPI=
 github.com/limetext/log4go v0.0.0-20191202173629-fcac346f7253 h1:VzvvRQhpVz3Kz1mVIFs5H+tcOEhNCfNnm1HBRlvIolU=
@@ -30,6 +31,8 @@ github.com/quarnster/parser v0.0.0-20150905092627-8991807ce6d3 h1:Np/9Wp8zvoqmTM
 github.com/quarnster/parser v0.0.0-20150905092627-8991807ce6d3/go.mod h1:gktfyr4F4DIPjruutBnZlzkKSqZfOOLFtP8r+4nL7rw=
 github.com/rjeczalik/notify v0.9.2 h1:MiTWrPj55mNDHEiIX5YUSKefw/+lCQVoAFmD6oQm5w8=
 github.com/rjeczalik/notify v0.9.2/go.mod h1:aErll2f0sUX9PXZnVNyeiObbmTlk5jnMoCa4QEjJeqM=
+github.com/zoli/sublime v0.0.0-20200317202733-39f5b6be4e77 h1:X3QugAqhppcTI+1Nc7/York7uBK5sGb3Brz9qOkwYAg=
+github.com/zoli/sublime v0.0.0-20200317202733-39f5b6be4e77/go.mod h1:Ckjq4FK6U0zLE3xM4iSZPyc0HyU5pYlZ4vF8kmCQ66U=
 golang.org/x/sys v0.0.0-20180926160741-c2ed4eda69e7/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756 h1:9nuHUbU8dRnRRfj9KjWUVrJeoexdbeMjttk6Oh1rD10=
 golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
