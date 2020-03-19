@@ -36,7 +36,7 @@ func (d *dialog) Render() {
 	x, y := d.Position()
 	style := defStyle
 
-	fe.screen.Clear()
+	fe.screen.Clear(defStyle)
 
 	for _, r := range d.msg {
 		fe.screen.setContent(&x, &y, r, w, style)

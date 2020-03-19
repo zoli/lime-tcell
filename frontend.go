@@ -77,7 +77,7 @@ func (f *frontend) OkCancelDialog(msg string, okname string) bool {
 	if w := f.editor.ActiveWindow(); w != nil && w.ActiveView() != nil {
 		f.Render(w.ActiveView())
 	} else {
-		f.screen.Clear()
+		f.screen.Clear(defStyle)
 		f.screen.Show()
 	}
 
@@ -97,7 +97,7 @@ func (f *frontend) Prompt(title, folder string, flags int) []string {
 	if w := f.editor.ActiveWindow(); w != nil && w.ActiveView() != nil {
 		f.Render(w.ActiveView())
 	} else {
-		f.screen.Clear()
+		f.screen.Clear(defStyle)
 		f.screen.Show()
 	}
 
@@ -137,7 +137,7 @@ func (f *frontend) closeView(bv *backend.View) {
 	delete(f.views, bv)
 
 	if len(f.views) == 0 {
-		f.screen.Clear()
+		f.screen.Clear(defStyle)
 		f.screen.Show()
 		return
 	}

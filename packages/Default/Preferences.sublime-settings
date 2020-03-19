@@ -24,7 +24,7 @@
 	// If true searches will continue from the beginning after reaching end of file
 	"find_wrap": true,
 
-	"color_scheme": "../packages/TextMate-Themes/Monokai.tmTheme",
+	"color_scheme": "./packages/TextMate-Themes/Monokai Dark.tmTheme",
 
 	"ignored_packages":
 	[

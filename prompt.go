@@ -92,7 +92,8 @@ func (p *prompt) Render() {
 	w, h := p.Dimension()
 	x, y, style := px, py, defStyle
 
-	fe.screen.Clear()
+	fe.screen.Clear(defStyle)
+
 	for i, l := range p.lines {
 		style = defStyle
 		if i == p.selected {

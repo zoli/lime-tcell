@@ -50,3 +50,7 @@ func (s *screen) setContent(xp, yp *int, r rune, w int, style tcell.Style) {
 
 	*xp, *yp = x, y
 }
+
+func (s *screen) Clear(style tcell.Style) {
+	s.Screen.Fill(' ', style)
+}
