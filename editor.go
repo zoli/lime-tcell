@@ -6,10 +6,10 @@ func initEditor() *backend.Editor {
 	setCallBacks()
 
 	ed := backend.GetEditor()
-	ed.AddPackagesPath("./packages")
 	ed.Init()
 	ed.SetDefaultPath("./packages/Default")
 	ed.SetUserPath("./packages/User")
+	ed.AddPackagesPath("./packages")
 	ed.NewWindow()
 
 	return ed
