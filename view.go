@@ -26,6 +26,13 @@ func newView(bv *backend.View, lay layout) *view {
 
 		fe.Render(v.bv)
 	})
+	v.bv.Settings().AddOnChange("syntac_update", func(key string) {
+		if key != "lime.syntax.updated" {
+
+		}
+
+		fe.Render(v.bv)
+	})
 	v.loadStyle()
 	return v
 }
