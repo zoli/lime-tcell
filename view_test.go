@@ -9,8 +9,8 @@ import (
 func TestCalcVisibleRegion(t *testing.T) {
 	defer closeAll()
 
-	bv := fe.editor.ActiveWindow().OpenFile("testdata/file", 0644)
-	v := fe.views[bv]
+	bv := fe.ed.ActiveWindow().OpenFile("testdata/file", 0644)
+	v := fe.view(bv)
 
 	tests := []struct {
 		vr, in, exp text.Region

@@ -1,42 +1,56 @@
 package main
 
-import "github.com/limetext/backend/keys"
+import (
+	"github.com/limetext/backend/keys"
+	"github.com/limetext/text"
+)
 
 type (
 	widget interface {
+		rect
+		Render(text.Region)
+		VisibleRegion() text.Region
 		HandleInput(keys.KeyPress)
-		Render()
-		layout
 	}
 
-	layout interface {
+	rect interface {
 		Position() (int, int)
 		Dimension() (int, int)
 		SetPosition(int, int)
 		SetDimension(int, int)
+		ZIndex() int
+		SetZIndex(int)
 	}
 
-	basicLayout struct {
-		x, y, w, h int
+	basicRect struct {
+		x, y, w, h, zi int
 	}
 )
 
-func newLayout(x, y, w, h int) layout {
-	return &basicLayout{x, y, w, h}
+func newRect(x, y, w, h int) rect {
+	return &basicRect{x: x, y: y, w: w, h: h}
 }
 
-func (bl *basicLayout) Position() (int, int) {
-	return bl.x, bl.y
+func (br *basicRect) Position() (int, int) {
+	return br.x, br.y
 }
 
-func (bl *basicLayout) Dimension() (int, int) {
-	return bl.w, bl.h
+func (br *basicRect) Dimension() (int, int) {
+	return br.w, br.h
 }
 
-func (bl *basicLayout) SetPosition(x, y int) {
-	bl.x, bl.y = x, y
+func (br *basicRect) SetPosition(x, y int) {
+	br.x, br.y = x, y
 }
 
-func (bl *basicLayout) SetDimension(w, h int) {
-	bl.w, bl.h = w, h
+func (br *basicRect) SetDimension(w, h int) {
+	br.w, br.h = w, h
+}
+
+func (br *basicRect) ZIndex() int {
+	return br.zi
+}
+
+func (br *basicRect) SetZIndex(i int) {
+	br.zi = i
 }

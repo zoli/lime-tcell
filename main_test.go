@@ -19,7 +19,7 @@ func newFe() {
 
 	scrn := tcell.NewSimulationScreen("")
 
-	fe.screen.Screen = scrn
+	fe.scrn.Screen = scrn
 	err = fe.init()
 	if err != nil {
 		panic(err)
@@ -30,11 +30,11 @@ func newFe() {
 
 func postQuitEvent() {
 	ev := tcell.NewEventKey(tcell.KeyRune, 'q', tcell.ModCtrl)
-	fe.screen.PostEventWait(ev)
+	fe.scrn.PostEventWait(ev)
 }
 
 func closeAll() {
-	ws := fe.editor.Windows()
+	ws := fe.ed.Windows()
 	for _, w := range ws {
 		vs := w.Views()
 		for _, v := range vs {
@@ -44,10 +44,10 @@ func closeAll() {
 		w.Close()
 	}
 
-	fe.editor.NewWindow()
+	fe.ed.NewWindow()
 }
 
 func getContent(x, y int) rune {
-	r, _, _, _ := fe.screen.GetContent(x, y)
+	r, _, _, _ := fe.scrn.GetContent(x, y)
 	return r
 }

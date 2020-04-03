@@ -3,19 +3,19 @@ package main
 import "github.com/limetext/backend/keys"
 
 type dialog struct {
-	layout
+	rect
 	msg              string
 	okBtn, cancelBtn string
 	ch               chan bool
 	ok               bool
 }
 
-func newDialog(msg string, ch chan bool, lay layout) *dialog {
+func newDialog(msg string, ch chan bool, rec rect) *dialog {
 	return &dialog{
 		msg:   msg,
 		ch:    ch,
 		okBtn: "Ok", cancelBtn: "Cancel",
-		layout: lay,
+		rect: rec,
 	}
 }
 
@@ -36,10 +36,10 @@ func (d *dialog) Render() {
 	x, y := d.Position()
 	style := defStyle
 
-	fe.screen.Clear(defStyle)
+	fe.scrn.Clear(defStyle)
 
 	for _, r := range d.msg {
-		fe.screen.setContent(&x, &y, r, w, style)
+		fe.scrn.setContent(&x, &y, r, w, style)
 	}
 	x = 0
 	y += 2
@@ -48,7 +48,7 @@ func (d *dialog) Render() {
 		style = style.Reverse(true)
 	}
 	for _, r := range d.okBtn {
-		fe.screen.setContent(&x, &y, r, w, style)
+		fe.scrn.setContent(&x, &y, r, w, style)
 	}
 	x += 4
 
@@ -57,10 +57,10 @@ func (d *dialog) Render() {
 		style = style.Reverse(true)
 	}
 	for _, r := range d.cancelBtn {
-		fe.screen.setContent(&x, &y, r, w, style)
+		fe.scrn.setContent(&x, &y, r, w, style)
 	}
 
-	fe.screen.Show()
+	fe.scrn.Show()
 }
 
 func (d *dialog) Toggle() {

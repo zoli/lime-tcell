@@ -11,7 +11,7 @@ import (
 )
 
 type prompt struct {
-	layout
+	rect
 	dir              string
 	submBtn, discBtn string
 	ch               chan []string
@@ -19,8 +19,8 @@ type prompt struct {
 	selected         int
 }
 
-func newPrompt(dir string, ch chan []string, lay layout) *prompt {
-	return &prompt{dir: dir, ch: ch, layout: lay}
+func newPrompt(dir string, ch chan []string, rec rect) *prompt {
+	return &prompt{dir: dir, ch: ch, rect: rec}
 }
 
 func (p *prompt) HandleInput(kp keys.KeyPress) {
@@ -92,7 +92,7 @@ func (p *prompt) Render() {
 	w, h := p.Dimension()
 	x, y, style := px, py, defStyle
 
-	fe.screen.Clear(defStyle)
+	fe.scrn.Clear(defStyle)
 
 	for i, l := range p.lines {
 		style = defStyle
@@ -102,7 +102,7 @@ func (p *prompt) Render() {
 
 		runes := []rune(l)
 		for _, r := range runes {
-			fe.screen.setContent(&x, &y, r, w, style)
+			fe.scrn.setContent(&x, &y, r, w, style)
 		}
 
 		y++
@@ -112,7 +112,7 @@ func (p *prompt) Render() {
 		}
 	}
 
-	fe.screen.Show()
+	fe.scrn.Show()
 }
 
 func (p *prompt) init() {

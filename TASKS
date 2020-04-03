@@ -8,8 +8,9 @@
 	✔	Page up, Page down @done (20-03-15 21:49)
 	—	Show tabs
 	—	Show line numbers
-	—	Syntax Highlighting
+	✔	Syntax Highlighting @done (20-03-20 10:25)
 	—	Status bar
 	—	Sidebar
 	—	Overlay
 	—	Unify view, dialog, prompt
+	—	Catch quit event from editor, not directly from frontend

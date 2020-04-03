@@ -10,9 +10,9 @@ import (
 var fe *frontend
 
 func main() {
+	var err error
 	log.AddFilter("stdout", log.FINEST, log.NewFileLogWriter("debug.log", false))
 
-	var err error
 	fe, err = newFrontend()
 	if err != nil {
 		log.Error(err)
@@ -24,8 +24,8 @@ func main() {
 		log.Error(err)
 		return
 	}
-	defer shutDown()
 
+	defer shutDown()
 	fe.loop()
 }
 

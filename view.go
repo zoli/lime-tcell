@@ -9,14 +9,14 @@ import (
 )
 
 type view struct {
-	layout
+	rect
 	bv    *backend.View
 	vr    text.Region
 	style tcell.Style
 }
 
-func newView(bv *backend.View, lay layout) *view {
-	v := &view{bv: bv, layout: lay}
+func newView(bv *backend.View, rec rect) *view {
+	v := &view{bv: bv, rect: rec}
 	v.bv.Settings().AddOnChange("color_scheme", func(key string) {
 		if key != "color_scheme" {
 			return
@@ -41,7 +41,7 @@ func (v *view) Render(r text.Region) {
 	v.calcVisibleRegion(r)
 	log.Finest("Rendering %s, %s", v.bv, v.vr)
 
-	fe.screen.Clear(v.style)
+	fe.scrn.Clear(v.style)
 
 	w, _ := v.Dimension()
 	x, y := v.Position()
@@ -68,10 +68,10 @@ func (v *view) Render(r text.Region) {
 			style = style.Reverse(true)
 		}
 
-		fe.screen.setContent(&x, &y, r, w, style)
+		fe.scrn.setContent(&x, &y, r, w, style)
 	}
 
-	fe.screen.Show()
+	fe.scrn.Show()
 }
 
 func (v *view) calcVisibleRegion(r text.Region) {
