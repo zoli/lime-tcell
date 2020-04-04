@@ -36,8 +36,12 @@ func (f *frontend) init() error {
 func (f *frontend) setCallBacks() {
 	backend.OnNewWindow.Add(fe.addWindow)
 
-	backend.OnNew.Add(fe.newView)
-	backend.OnClose.Add(fe.closeView)
+	backend.OnNew.Add(func(bv *backend.View) {
+		f.window(bv.Window()).pane.newView(bv)
+	})
+	backend.OnClose.Add(func(bv *backend.View) {
+		f.window(bv.Window()).pane.closeView(bv)
+	})
 	backend.OnActivated.Add(fe.Render)
 	backend.OnModified.Add(fe.Render)
 	backend.OnSelectionModified.Add(fe.Render)
@@ -117,8 +121,8 @@ func (f *frontend) Render(bv *backend.View) {
 }
 
 func (f *frontend) addWindow(bw *backend.Window) {
-	w := newWindow(bw)
-	f.windows[bw] = w
+	w, h := f.scrn.Size()
+	f.windows[bw] = newWindow(bw, w, h)
 }
 
 func (f *frontend) window(bw *backend.Window) *window {
@@ -131,12 +135,4 @@ func (f *frontend) view(bv *backend.View) *view {
 
 func (f *frontend) activeWindow() *window {
 	return f.windows[f.ed.ActiveWindow()]
-}
-
-func (f *frontend) newView(bv *backend.View) {
-	f.window(bv.Window()).pane.newView(bv)
-}
-
-func (f *frontend) closeView(bv *backend.View) {
-	f.window(bv.Window()).pane.closeView(bv)
 }
